@@ -27,7 +27,6 @@ import com.hivemq.metrics.handler.MetricsInitializer;
 import com.hivemq.mqtt.handler.auth.AuthHandler;
 import com.hivemq.mqtt.handler.auth.AuthInProgressMessageHandler;
 import com.hivemq.mqtt.handler.connect.ConnectHandler;
-import com.hivemq.mqtt.handler.connect.ConnectPersistenceUpdateHandler;
 import com.hivemq.mqtt.handler.connect.ConnectionLimiterHandler;
 import com.hivemq.mqtt.handler.connect.NoConnectIdleHandler;
 import com.hivemq.mqtt.handler.disconnect.DisconnectHandler;
@@ -68,9 +67,6 @@ public class ChannelDependenciesTest {
 
     @Mock
     private ConnectHandler connectHandler;
-
-    @Mock
-    private ConnectPersistenceUpdateHandler connectPersistenceUpdateHandler;
 
     @Mock
     private DisconnectHandler disconnectHandler;
@@ -205,7 +201,6 @@ public class ChannelDependenciesTest {
                 noConnectIdleHandler,
                 () -> connectHandler,
                 connectionLimiterHandler,
-                connectPersistenceUpdateHandler,
                 disconnectHandler,
                 () -> subscribeHandler,
                 () -> publishUserEventReceivedHandler,
@@ -269,7 +264,6 @@ public class ChannelDependenciesTest {
         assertNotNull(channelDependencies.getMetricsHolder());
         assertNotNull(channelDependencies.getExceptionHandler());
         assertNotNull(channelDependencies.getPingRequestHandler());
-        assertNotNull(channelDependencies.getConnectPersistenceUpdateHandler());
         assertNotNull(channelDependencies.getRestrictionsConfigurationService());
         assertNotNull(channelDependencies.getMqttConnectDecoder());
         assertNotNull(channelDependencies.getReturnMessageIdToPoolHandler());
