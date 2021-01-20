@@ -25,6 +25,7 @@ import com.hivemq.extension.sdk.api.annotations.NotNull;
 import com.hivemq.extensions.handler.*;
 import com.hivemq.logging.EventLog;
 import com.hivemq.metrics.MetricsHolder;
+import com.hivemq.metrics.handler.GlobalMQTTMessageCounter;
 import com.hivemq.metrics.handler.MetricsInitializer;
 import com.hivemq.mqtt.handler.auth.AuthHandler;
 import com.hivemq.mqtt.handler.auth.AuthInProgressMessageHandler;
@@ -99,6 +100,8 @@ public class ChannelDependencies {
     private final @NotNull UnsubackOutboundInterceptorHandler unsubackOutboundInterceptorHandler;
     private final @NotNull PingInterceptorHandler pingInterceptorHandler;
     private final @NotNull MqttServerDisconnector mqttServerDisconnector;
+    private final @NotNull GlobalMQTTMessageCounter globalMQTTMessageCounter;
+
 
     @Inject
     public ChannelDependencies(
@@ -145,7 +148,8 @@ public class ChannelDependencies {
             final @NotNull UnsubackOutboundInterceptorHandler unsubackOutboundInterceptorHandler,
             final @NotNull UnsubscribeInboundInterceptorHandler unsubscribeInboundInterceptorHandler,
             final @NotNull PingInterceptorHandler pingInterceptorHandler,
-            final @NotNull MqttServerDisconnector mqttServerDisconnector) {
+            final @NotNull MqttServerDisconnector mqttServerDisconnector,
+            final @NotNull GlobalMQTTMessageCounter globalMQTTMessageCounter) {
 
         this.statisticsInitializer = statisticsInitializer;
         this.noConnectIdleHandler = noConnectIdleHandler;
@@ -166,7 +170,7 @@ public class ChannelDependencies {
         this.restrictionsConfigurationService = restrictionsConfigurationService;
         this.mqttConnectDecoder = mqttConnectDecoder;
         this.returnMessageIdToPoolHandler = returnMessageIdToPoolHandler;
-        this.mqttMessageEncoder = new MQTTMessageEncoder(encoderFactory);
+        this.mqttMessageEncoder = new MQTTMessageEncoder(encoderFactory, globalMQTTMessageCounter);
         this.dropOutgoingPublishesHandlerProvider = dropOutgoingPublishesHandlerProvider;
         this.eventLog = eventLog;
         this.sslParameterHandler = sslParameterHandler;
@@ -191,6 +195,7 @@ public class ChannelDependencies {
         this.unsubscribeInboundInterceptorHandler = unsubscribeInboundInterceptorHandler;
         this.pingInterceptorHandler = pingInterceptorHandler;
         this.mqttServerDisconnector = mqttServerDisconnector;
+        this.globalMQTTMessageCounter = globalMQTTMessageCounter;
     }
 
     @NotNull
@@ -411,5 +416,10 @@ public class ChannelDependencies {
     @NotNull
     public MqttServerDisconnector getMqttServerDisconnector() {
         return mqttServerDisconnector;
+    }
+
+    @NotNull
+    public GlobalMQTTMessageCounter getGlobalMQTTMessageCounter() {
+        return globalMQTTMessageCounter;
     }
 }
