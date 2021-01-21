@@ -26,7 +26,6 @@ import com.hivemq.extensions.handler.*;
 import com.hivemq.logging.EventLog;
 import com.hivemq.metrics.MetricsHolder;
 import com.hivemq.metrics.handler.GlobalMQTTMessageCounter;
-import com.hivemq.metrics.handler.MetricsInitializer;
 import com.hivemq.mqtt.handler.auth.AuthHandler;
 import com.hivemq.mqtt.handler.auth.AuthInProgressMessageHandler;
 import com.hivemq.mqtt.handler.connect.ConnectHandler;
@@ -56,7 +55,6 @@ import javax.inject.Provider;
  */
 public class ChannelDependencies {
 
-    private final @NotNull Provider<MetricsInitializer> statisticsInitializer;
     private final @NotNull NoConnectIdleHandler noConnectIdleHandler;
     private final @NotNull Provider<ConnectHandler> connectHandlerProvider;
     private final @NotNull ConnectionLimiterHandler connectionLimiterHandler;
@@ -105,7 +103,6 @@ public class ChannelDependencies {
 
     @Inject
     public ChannelDependencies(
-            final @NotNull Provider<MetricsInitializer> statisticsInitializer,
             final @NotNull NoConnectIdleHandler noConnectIdleHandler,
             final @NotNull Provider<ConnectHandler> connectHandlerProvider,
             final @NotNull ConnectionLimiterHandler connectionLimiterHandler,
@@ -151,7 +148,6 @@ public class ChannelDependencies {
             final @NotNull MqttServerDisconnector mqttServerDisconnector,
             final @NotNull GlobalMQTTMessageCounter globalMQTTMessageCounter) {
 
-        this.statisticsInitializer = statisticsInitializer;
         this.noConnectIdleHandler = noConnectIdleHandler;
         this.connectHandlerProvider = connectHandlerProvider;
         this.connectionLimiterHandler = connectionLimiterHandler;
@@ -196,11 +192,6 @@ public class ChannelDependencies {
         this.pingInterceptorHandler = pingInterceptorHandler;
         this.mqttServerDisconnector = mqttServerDisconnector;
         this.globalMQTTMessageCounter = globalMQTTMessageCounter;
-    }
-
-    @NotNull
-    public MetricsInitializer getStatisticsInitializer() {
-        return statisticsInitializer.get();
     }
 
     @NotNull

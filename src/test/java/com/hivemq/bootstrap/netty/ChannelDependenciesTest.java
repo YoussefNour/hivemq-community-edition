@@ -24,7 +24,6 @@ import com.hivemq.extensions.handler.*;
 import com.hivemq.logging.EventLog;
 import com.hivemq.metrics.MetricsHolder;
 import com.hivemq.metrics.handler.GlobalMQTTMessageCounter;
-import com.hivemq.metrics.handler.MetricsInitializer;
 import com.hivemq.mqtt.handler.auth.AuthHandler;
 import com.hivemq.mqtt.handler.auth.AuthInProgressMessageHandler;
 import com.hivemq.mqtt.handler.connect.ConnectHandler;
@@ -59,9 +58,6 @@ import static org.junit.Assert.assertNotNull;
 public class ChannelDependenciesTest {
 
     private ChannelDependencies channelDependencies;
-
-    @Mock
-    private MetricsInitializer statisticsInitializer;
 
     @Mock
     private NoConnectIdleHandler noConnectIdleHandler;
@@ -201,7 +197,6 @@ public class ChannelDependenciesTest {
         MockitoAnnotations.initMocks(this);
 
         channelDependencies = new ChannelDependencies(
-                () -> statisticsInitializer,
                 noConnectIdleHandler,
                 () -> connectHandler,
                 connectionLimiterHandler,
@@ -254,7 +249,6 @@ public class ChannelDependenciesTest {
     @Test
     public void test_all_provided() {
 
-        assertNotNull(channelDependencies.getStatisticsInitializer());
         assertNotNull(channelDependencies.getNoConnectIdleHandler());
         assertNotNull(channelDependencies.getConnectHandler());
         assertNotNull(channelDependencies.getDisconnectHandler());
