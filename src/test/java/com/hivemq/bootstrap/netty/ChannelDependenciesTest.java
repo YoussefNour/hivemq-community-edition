@@ -36,8 +36,6 @@ import com.hivemq.mqtt.handler.publish.DropOutgoingPublishesHandler;
 import com.hivemq.mqtt.handler.publish.MessageExpiryHandler;
 import com.hivemq.mqtt.handler.publish.PublishUserEventReceivedHandler;
 import com.hivemq.mqtt.handler.publish.ReturnMessageIdToPoolHandler;
-import com.hivemq.mqtt.handler.publish.qos.QoSReceiverHandler;
-import com.hivemq.mqtt.handler.publish.qos.QoSSenderHandler;
 import com.hivemq.mqtt.handler.subscribe.SubscribeHandler;
 import com.hivemq.mqtt.handler.unsubscribe.UnsubscribeHandler;
 import com.hivemq.security.ssl.SslParameterHandler;
@@ -76,12 +74,6 @@ public class ChannelDependenciesTest {
 
     @Mock
     private UnsubscribeHandler unsubscribeHandler;
-
-    @Mock
-    private QoSReceiverHandler qoSReceiverHandler;
-
-    @Mock
-    private QoSSenderHandler qoSSenderHandler;
 
     @Mock
     private ChannelGroup channelGroup;
@@ -204,8 +196,6 @@ public class ChannelDependenciesTest {
                 () -> subscribeHandler,
                 () -> publishUserEventReceivedHandler,
                 () -> unsubscribeHandler,
-                () -> qoSReceiverHandler,
-                () -> qoSSenderHandler,
                 channelGroup,
                 fullConfigurationService,
                 globalTrafficShapingHandler,
@@ -255,8 +245,6 @@ public class ChannelDependenciesTest {
         assertNotNull(channelDependencies.getSubscribeHandler());
         assertNotNull(channelDependencies.getPublishUserEventReceivedHandler());
         assertNotNull(channelDependencies.getUnsubscribeHandler());
-        assertNotNull(channelDependencies.getQoSSenderHandler());
-        assertNotNull(channelDependencies.getQoSReceiverHandler());
         assertNotNull(channelDependencies.getChannelGroup());
         assertNotNull(channelDependencies.getConfigurationService());
         assertNotNull(channelDependencies.getGlobalTrafficShapingHandler());
