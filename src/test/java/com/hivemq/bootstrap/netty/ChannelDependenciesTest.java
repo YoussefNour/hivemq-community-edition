@@ -35,7 +35,6 @@ import com.hivemq.mqtt.handler.ping.PingRequestHandler;
 import com.hivemq.mqtt.handler.publish.DropOutgoingPublishesHandler;
 import com.hivemq.mqtt.handler.publish.MessageExpiryHandler;
 import com.hivemq.mqtt.handler.publish.PublishUserEventReceivedHandler;
-import com.hivemq.mqtt.handler.publish.ReturnMessageIdToPoolHandler;
 import com.hivemq.mqtt.handler.subscribe.SubscribeHandler;
 import com.hivemq.mqtt.handler.unsubscribe.UnsubscribeHandler;
 import com.hivemq.security.ssl.SslParameterHandler;
@@ -98,9 +97,6 @@ public class ChannelDependenciesTest {
 
     @Mock
     private MqttConnectDecoder mqttConnectDecoder;
-
-    @Mock
-    private ReturnMessageIdToPoolHandler returnMessageIdToPoolHandler;
 
     @Mock
     private EncoderFactory encoderFactory;
@@ -204,7 +200,6 @@ public class ChannelDependenciesTest {
                 pingRequestHandler,
                 restrictionsConfigurationService,
                 mqttConnectDecoder,
-                returnMessageIdToPoolHandler,
                 () -> dropOutgoingPublishesHandler,
                 eventLog,
                 sslParameterHandler,
@@ -253,7 +248,6 @@ public class ChannelDependenciesTest {
         assertNotNull(channelDependencies.getPingRequestHandler());
         assertNotNull(channelDependencies.getRestrictionsConfigurationService());
         assertNotNull(channelDependencies.getMqttConnectDecoder());
-        assertNotNull(channelDependencies.getReturnMessageIdToPoolHandler());
         assertNotNull(channelDependencies.getMqttMessageEncoder());
         assertNotNull(channelDependencies.getDropOutgoingPublishesHandler());
         assertNotNull(channelDependencies.getPublishMessageExpiryHandler());
